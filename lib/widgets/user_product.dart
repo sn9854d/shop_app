@@ -34,6 +34,7 @@ class UserProduct extends StatelessWidget {
                   EditProductScreen.routeName,
                   arguments: productId,
                 );
+                print('git change');
               },
             ),
             IconButton(
