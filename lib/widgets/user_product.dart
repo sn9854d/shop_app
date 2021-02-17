@@ -15,6 +15,7 @@ class UserProduct extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(imageUrl),
@@ -34,7 +35,6 @@ class UserProduct extends StatelessWidget {
                   EditProductScreen.routeName,
                   arguments: productId,
                 );
-                print('git change');
               },
             ),
             IconButton(
@@ -42,8 +42,18 @@ class UserProduct extends StatelessWidget {
                 Icons.delete,
                 color: Theme.of(context).errorColor,
               ),
-              onPressed: () {
-                Provider.of<Products>(context,listen: false).removeProduct(productId);
+              onPressed: () async {
+                try {
+                  await Provider.of<Products>(context, listen: false)
+                      .removeProduct(productId);
+                } catch (e) {
+                  scaffold.showSnackBar(SnackBar(
+                    content: Text(
+                      'Deletion failed!',
+                      textAlign: TextAlign.center,
+                    ),
+                  ));
+                }
               },
             ),
           ],

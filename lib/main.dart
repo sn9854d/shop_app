@@ -31,9 +31,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
-            fontFamily: 'Lato'),
+          primarySwatch: Colors.purple,
+          accentColor: Colors.deepOrange,
+          fontFamily: 'Lato',
+        ),
         debugShowCheckedModeBanner: false,
         home: ProductOverViewScreen(),
         routes: {
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
           CartScreen.routName: (context) => CartScreen(),
           OrderScreen.routeName: (context) => OrderScreen(),
           UserProductsScreen.routeName: (context) => UserProductsScreen(),
-          EditProductScreen.routeName : (context) => EditProductScreen(),
+          EditProductScreen.routeName: (context) => EditProductScreen(),
         },
       ),
     );
