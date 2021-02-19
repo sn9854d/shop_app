@@ -79,7 +79,7 @@ class Auth with ChangeNotifier {
     await _authintecate(email, password, urlSegment);
   }
 
-  void logOut() {
+  void logOut() async{
     _userId = null;
     _token = null;
     _expiryDate = null;
@@ -88,6 +88,8 @@ class Auth with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
+    final pref = await SharedPreferences.getInstance();
+    pref.clear();
   }
 
   void _autoLogOut() {

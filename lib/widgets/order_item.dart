@@ -20,50 +20,62 @@ class _OrderItemState extends State<OrderItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            ListTile(
-              title: Text('\$${widget.order.amount}'),
-              subtitle: Text(
-                // order.dateTime.toString(),
-                DateFormat('dd/MM/yyyy-hh:mm:ss').format(widget.order.dateTime),
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: _expanded
+          ? min(widget.order.products.length * 20.0 + 112, 250.0)
+          : 100.0,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              ListTile(
+                title: Text('\$${widget.order.amount.toStringAsFixed(3)}'),
+                subtitle: Text(
+                  // order.dateTime.toString(),
+                  DateFormat('dd/MM/yyyy-hh:mm:ss')
+                      .format(widget.order.dateTime),
+                ),
+                trailing: IconButton(
+                  icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                  onPressed: () {
+                    setState(() {
+                      _expanded = !_expanded;
+                    });
+                  },
+                ),
               ),
-              trailing: IconButton(
-                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-                onPressed: () {
-                  setState(() {
-                    _expanded = !_expanded;
-                  });
-                },
-              ),
-            ),
-            if (_expanded)
-              Container(
-                height: min(widget.order.products.length * 20.0 + 10, 100.0),
-                child: ListView(
-                  children: widget.order.products
-                      .map(
-                        (product) => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              product.title,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+              AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                height: _expanded
+                    ? min(widget.order.products.length * 20.0 + 16, 100.0)
+                    : 0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ListView(
+                    children: widget.order.products
+                        .map(
+                          (product) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                product.title,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text('${product.quentity}x\$${product.price}'),
-                          ],
-                        ),
-                      )
-                      .toList(),
+                              Text('${product.quentity}x\$${product.price}'),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               )
-          ],
+            ],
+          ),
         ),
       ),
     );
